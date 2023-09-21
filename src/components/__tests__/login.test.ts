@@ -20,7 +20,7 @@ describe('LoginForm', () => {
   // That there is a 'Remember me' checkbox
   test('should contain checkbox for remember user', () => {
     const wrapper = shallowMount(Login)
-    expect(wrapper.find('v-text-field[type=checkbox]').exists()).toBe(true)
+    expect(wrapper.find('v-checkbox[type=checkbox]').exists()).toBe(true)
   })
   // That there is a 'Forgot Password' link
   test('should contain Forgot Password link', () => {
