@@ -37,6 +37,12 @@ npm run dev
 
 7. Write initial interactive content tests
 
+8. Layout page structure and additional content
+
+9. Install Vuetify with manual steps
+
+   https://vuetifyjs.com/en/getting-started/installation/
+
 ## Commands
 
 ### Type-Check, Compile and Minify for Production

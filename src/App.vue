@@ -3,7 +3,16 @@ import LoginFormVue from '@/components/LoginForm.vue'
 </script>
 
 <template>
-  <LoginFormVue />
+  <main>
+    <div>
+      <div>
+        <img />
+        <p>Lock Login</p>
+      </div>
+      <img />
+    </div>
+    <LoginFormVue />
+  </main>
 </template>
 
 <style scoped></style>
