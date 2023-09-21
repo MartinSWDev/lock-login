@@ -35,6 +35,8 @@ npm run dev
 
 6. Write test plan
 
+7. Write initial interactive content tests
+
 ## Commands
 
 ### Type-Check, Compile and Minify for Production
