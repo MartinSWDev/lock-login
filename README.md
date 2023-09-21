@@ -1,6 +1,6 @@
 # lock-login
 
-## Step taken
+## Steps taken
 
 1.  Install Vue with
 
@@ -30,6 +30,10 @@ npm run dev
 ```
 
 4. Add VScode extensions as recommended: Volar and Volar Typescript
+
+5. Clean out files and folders to minimum
+
+6. Write test plan
 
 ## Commands
 

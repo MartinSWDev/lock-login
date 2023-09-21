@@ -1,5 +1,9 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import LoginFormVue from '@/components/LoginForm.vue'
+</script>
 
-<template>Hello World</template>
+<template>
+  <LoginFormVue />
+</template>
 
 <style scoped></style>
