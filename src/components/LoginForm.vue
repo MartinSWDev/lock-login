@@ -1,15 +1,15 @@
 <template>
-  <form action="">
+  <v-form action="" class="d-flex flex-column bg-blue-grey-lighten-5">
     <p>Welcome back!</p>
     <p>Please enter your details</p>
-    <input id="email" type="email" />
-    <input id="password" type="password" />
-    <input id="remember" type="checkbox" />
+    <v-text-field id="email" type="email"></v-text-field>
+    <v-text-field id="password" type="password"></v-text-field>
+    <v-text-field id="remember" type="checkbox"></v-text-field>
     <a href="">Forgot Password</a>
-    <button id="log-in">Log In</button>
-    <button id="google-log-in">Log in with Google</button>
+    <v-btn id="log-in">Log In</v-btn>
+    <v-btn id="google-log-in">Log in with Google</v-btn>
     <p>Don't have an account?<a href="">Sign Up</a></p>
-  </form>
+  </v-form>
 </template>
 
 <script lang="ts">
