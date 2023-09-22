@@ -43,6 +43,16 @@ npm run dev
 
    https://vuetifyjs.com/en/getting-started/installation/
 
+10. Add MDI fonts
+
+```
+npm install @mdi/font
+```
+
+11. Configure fonts / icons
+
+https://vuetifyjs.com/en/features/icon-fonts/
+
 ## Commands
 
 ### Type-Check, Compile and Minify for Production
