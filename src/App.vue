@@ -10,7 +10,7 @@ import LoginFormVue from '@/components/LoginForm.vue'
           <span class="mdi mdi-lock text-deep-purple-accent-2 lock-icon"></span>
           <p class="font-weight-bold">Lock Login</p>
         </div>
-        <img />
+        <img src="lock.png" width="100%" />
       </div>
       <LoginFormVue />
     </div>
