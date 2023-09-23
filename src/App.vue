@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import LoginFormVue from '@/components/LoginForm.vue'
+import LoginForm from '@/components/LoginForm.vue'
 </script>
 
 <template>
@@ -12,7 +12,7 @@ import LoginFormVue from '@/components/LoginForm.vue'
         </div>
         <img src="lock.png" width="100%" />
       </div>
-      <LoginFormVue />
+      <LoginForm />
     </div>
   </main>
 </template>

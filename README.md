@@ -53,22 +53,6 @@ npm install @mdi/font
 
 https://vuetifyjs.com/en/features/icon-fonts/
 
-## Commands
+12. Add styling
 
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-npm run test:unit
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+13. Write functionality tests

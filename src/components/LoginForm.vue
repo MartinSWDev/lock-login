@@ -9,6 +9,7 @@
         label="Email"
         variant="solo"
         class="mx-4"
+        v-model="input.email"
       ></v-text-field>
       <v-text-field
         id="password"
@@ -16,6 +17,7 @@
         label="Password"
         variant="solo"
         class="mx-4"
+        v-model="input.password"
       ></v-text-field>
       <v-row class="d-flex align-center justify-between mb-16 mx-4">
         <v-checkbox
@@ -40,7 +42,17 @@
 </template>
 
 <script lang="ts">
-export default {}
+export default {
+  name: 'LoginForm',
+  data() {
+    return {
+      input: {
+        email: '',
+        password: ''
+      }
+    }
+  }
+}
 </script>
 
 <style scoped>
