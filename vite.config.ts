@@ -9,17 +9,24 @@ import svgLoader from 'vite-svg-loader'
 export default defineConfig({
   plugins: [
     vue({
-      template: {
-        compilerOptions: {
-          isCustomElement: (tag) => tag.startsWith('v-')
-        }
-      }
+      // template: {
+      //   compilerOptions: {
+      //     isCustomElement: (tag) => tag.startsWith('v-')
+      //   }
+      // }
     }),
     svgLoader()
   ],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    deps: {
+      inline: ['vuetify']
     }
   }
 })

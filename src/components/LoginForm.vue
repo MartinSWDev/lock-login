@@ -1,8 +1,7 @@
 <template>
   <v-form
-    @submit.prevent="logIn"
+    @keyup.enter="submit"
     id="form"
-    action=""
     class="d-flex flex-column text-center ma-4 bg-blue-grey-lighten-5"
   >
     <v-container class="d-flex flex-column justify-center">
@@ -14,7 +13,10 @@
         label="Email"
         variant="solo"
         class="mx-4"
+        :rules="emailRules"
+        required
         v-model="input.email"
+        test-id="email"
       ></v-text-field>
       <v-text-field
         id="password"
@@ -43,11 +45,11 @@
       </v-row>
       <v-btn
         id="log-in"
-        type="submit"
-        @click.prevent="logIn"
+        @click="submit"
         rounded="xl"
         size="x-large"
         class="text-none mb-6 mx-4"
+        form="form"
         >Log In</v-btn
       >
       <v-btn
@@ -81,7 +83,15 @@ export default {
         email: '',
         password: '',
         rememberMe: false
-      }
+      },
+      emailRules: [
+        (v: string) => !!v || 'E-mail is required',
+        (v: string) =>
+          /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/.test(
+            v
+          ) || 'E-mail must be valid',
+        (v: string) => (v && v.length <= 100) || 'E-mail must be less than 100 characters'
+      ]
     }
   },
 
@@ -89,8 +99,13 @@ export default {
     forgotPassword() {
       console.log('forgot')
     },
-    logIn() {
-      console.log('log in')
+    submit() {
+      console.log('submitted')
+      this.$emit('submit', {
+        email: this.input.email,
+        password: this.input.password,
+        rememberMe: this.input.rememberMe
+      })
     },
     logInWithGoogle() {
       console.log('g log in')
