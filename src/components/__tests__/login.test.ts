@@ -1,6 +1,6 @@
 import { shallowMount, mount } from '@vue/test-utils'
 import LoginForm from '@/components/LoginForm.vue'
-import { describe, it, expect, beforeEach, afterEach } from 'vitest'
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 
 describe('LoginForm', () => {
   describe('Content', () => {
@@ -55,37 +55,72 @@ describe('LoginForm', () => {
       // password value should update
       it('should update v-model value for password when entered', async () => {
         const wrapper = mount(LoginForm)
-        const emailInput = wrapper.get('v-text-field[type=password]')
-        emailInput.element.value = 'password'
-        emailInput.trigger('input')
+        const passwordInput = wrapper.get('v-text-field[type=password]')
+        passwordInput.element.value = 'password'
+        passwordInput.trigger('input')
         expect((wrapper.vm as any).input.password).toBe('password')
       })
       //   // accepts valid passwords
       //   // doesnt accept invalid passwords
       //   // displays invalid message
     })
-    // describe('Checkbox', () => {
-    //   // Some trigger
-    // })
-    // describe('Forgot Password', () => {
-    //   // Some trigger
-    // })
-    // describe('Log in', () => {
-    //   // Some trigger
-    //   // Keyboard Enter triggers
-    //   // Triggers if email and password complete
-    //   // Doesnt trigger if one / both fields empty
-    // })
-    // describe('Log in with Google', () => {
-    //   // Some trigger
-    // })
-    // describe('Sign Up', () => {
-    //   // Some trigger
-    // })
-    // // Can trigger Log in button
-    // // Can trigger Log in with Google button
-    // // Can trigger forgot password
-    // // Can trigger sign up
+    describe('Checkbox', () => {
+      it('should update v-model value for checkbox', async () => {
+        const wrapper = mount(LoginForm)
+        const checkboxInput = wrapper.get('v-checkbox[type=checkbox]')
+        checkboxInput.element.checked = true
+        await checkboxInput.trigger('change')
+        expect((wrapper.vm as any).input.rememberMe).toBe(true)
+      })
+    })
+    describe('Forgot Password', () => {
+      it('should trigger forgotPassword function', async () => {
+        const wrapper = mount(LoginForm)
+        const forgotPasswordMock = vi.fn()
+        wrapper.vm.forgotPassword = forgotPasswordMock
+        wrapper.get('#forgot').trigger('click')
+        await wrapper.vm.$nextTick()
+        expect(forgotPasswordMock).toHaveBeenCalled()
+      })
+    })
+    describe('Log in', () => {
+      it('should trigger logIn function on click', async () => {
+        const wrapper = mount(LoginForm)
+        const logInMock = vi.fn()
+        wrapper.vm.logIn = logInMock
+        await wrapper.get('#log-in').trigger('click')
+        expect(logInMock).toHaveBeenCalled()
+      })
+      it('should call logIn method when form is submitted', async () => {
+        const wrapper = mount(LoginForm)
+        const logInMock = vi.fn()
+        wrapper.vm.logIn = logInMock
+        await wrapper.get('#form').trigger('submit.prevent')
+        expect(logInMock).toHaveBeenCalled()
+      })
+      // Keyboard Enter triggers
+      // Triggers if email and password complete
+      // Doesnt trigger if one / both fields empty
+    })
+    describe('Log in with Google', () => {
+      it('should trigger logInWithGoogle function on click', async () => {
+        const wrapper = mount(LoginForm)
+        const logInWithGoogleMock = vi.fn()
+        wrapper.vm.logInWithGoogle = logInWithGoogleMock
+        await wrapper.get('#google-log-in').trigger('click')
+        expect(logInWithGoogleMock).toHaveBeenCalled()
+      })
+    })
+    describe('Sign Up', () => {
+      it('should trigger signUp function', async () => {
+        const wrapper = mount(LoginForm)
+        const signUpMock = vi.fn()
+        wrapper.vm.signUp = signUpMock
+        wrapper.get('#signUp').trigger('click')
+        await wrapper.vm.$nextTick()
+        expect(signUpMock).toHaveBeenCalled()
+      })
+    })
   })
 })
 

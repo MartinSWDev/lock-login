@@ -1,5 +1,10 @@
 <template>
-  <v-form id="form" action="" class="d-flex flex-column text-center ma-4 bg-blue-grey-lighten-5">
+  <v-form
+    @submit.prevent="logIn"
+    id="form"
+    action=""
+    class="d-flex flex-column text-center ma-4 bg-blue-grey-lighten-5"
+  >
     <v-container class="d-flex flex-column justify-center">
       <p class="mt-16 text-h5 font-weight-bold">Welcome back!</p>
       <p class="mb-16 text-grey-darken-1">Please enter your details</p>
@@ -23,19 +28,45 @@
         <v-checkbox
           id="remember"
           type="checkbox"
+          v-model="input.rememberMe"
           label="Remember Me"
           class="d-flex align-center ml-n3 remember font-weight-bold"
           color="deep-purple-accent-2"
         ></v-checkbox>
-        <a href="" class="text-deep-purple-accent-2 forgot font-weight-bold">Forgot Password</a>
+        <a
+          id="forgot"
+          @click.prevent="forgotPassword"
+          href=""
+          class="text-deep-purple-accent-2 forgot font-weight-bold"
+          >Forgot Password</a
+        >
       </v-row>
-      <v-btn id="log-in" rounded="xl" size="x-large" class="text-none mb-6 mx-4">Log In</v-btn>
-      <v-btn id="google-log-in" rounded="xl" size="x-large" class="text-none mx-4 mb-16 px-12"
+      <v-btn
+        id="log-in"
+        type="submit"
+        @click.prevent="logIn"
+        rounded="xl"
+        size="x-large"
+        class="text-none mb-6 mx-4"
+        >Log In</v-btn
+      >
+      <v-btn
+        id="google-log-in"
+        @click.prevent="logInWithGoogle"
+        rounded="xl"
+        size="x-large"
+        class="text-none mx-4 mb-16 px-12"
         ><img src="@/assets/svg/google.svg?url" width="30" /> Log in with Google</v-btn
       >
       <p class="mb-16">
         Don't have an account?
-        <a href="" class="text-deep-purple-accent-2 font-weight-bold">Sign Up</a>
+        <a
+          id="signUp"
+          @click.prevent="signUp"
+          href=""
+          class="text-deep-purple-accent-2 font-weight-bold"
+          >Sign Up</a
+        >
       </p>
     </v-container>
   </v-form>
@@ -48,8 +79,24 @@ export default {
     return {
       input: {
         email: '',
-        password: ''
+        password: '',
+        rememberMe: false
       }
+    }
+  },
+
+  methods: {
+    forgotPassword() {
+      console.log('forgot')
+    },
+    logIn() {
+      console.log('log in')
+    },
+    logInWithGoogle() {
+      console.log('g log in')
+    },
+    signUp() {
+      console.log('sign up')
     }
   }
 }
