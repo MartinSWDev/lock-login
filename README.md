@@ -57,6 +57,12 @@ https://vuetifyjs.com/en/features/icon-fonts/
 
 13. Write functionality tests
 
-14. Spend way to much time trying to get vitest / vuetality to work together
+14. Spend way to much time trying to get vitest / vuetify to work together
 
-15.
+15. Fix responsiveness - Vuetify is not great :/
+
+16. (Todo) Add blender model
+
+17. (Todo) Animate with Three.js
+
+18. (Todo) Tie in animation to input completion
