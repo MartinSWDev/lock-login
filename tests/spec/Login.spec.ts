@@ -16,8 +16,8 @@ global.ResizeObserver = require('resize-observer-polyfill')
 describe('LoginForm', () => {
   let wrapper: any = null
   afterEach(() => {
-    wrapper.unmount()
     vi.resetAllMocks()
+    wrapper.unmount()
   })
   beforeEach(() => {
     wrapper = mount(LoginForm, {
@@ -95,15 +95,78 @@ describe('LoginForm', () => {
       })
     })
     describe('Password Input', () => {
-      // password value should update
       it('should update v-model value for password when entered', async () => {
         const passwordInput = wrapper.get('input[type=password]')
-        passwordInput.setValue('password')
+        await passwordInput.setValue('password')
         expect((wrapper.vm as any).input.password).toBe('password')
       })
-      //   // accepts valid passwords
-      //   // doesnt accept invalid passwords
-      //   // displays invalid message
+      it('should show error for missing password', async () => {
+        const passwordInput = wrapper.get('input[type=password]')
+        await passwordInput.trigger('focus')
+        await passwordInput.trigger('blur')
+        await wrapper.vm.$nextTick()
+        const errorMessage = wrapper.get('#password-messages')
+        expect(errorMessage.text()).toBe('Password is required')
+      })
+      it('should show error for password shorter than 8 characters', async () => {
+        const passwordInput = wrapper.get('input[type=password]')
+        await passwordInput.setValue('Short1!')
+        await passwordInput.trigger('keyup')
+        await wrapper.vm.$nextTick()
+        const errorMessage = wrapper.get('#password-messages')
+        expect(errorMessage.text()).toBe('Password must be at least 8 characters')
+      })
+      it('should show error for password without uppercase characters', async () => {
+        const passwordInput = wrapper.get('input[type=password]')
+        await passwordInput.setValue('alllowercase1!')
+        await passwordInput.trigger('keyup')
+        await wrapper.vm.$nextTick()
+        const errorMessage = wrapper.get('#password-messages')
+        expect(errorMessage.text()).toBe('Password must have at least one uppercase character')
+      })
+      it('should show error for password without lowercase characters', async () => {
+        const passwordInput = wrapper.get('input[type=password]')
+        await passwordInput.setValue('ALLUPPER1!')
+        await passwordInput.trigger('keyup')
+        await wrapper.vm.$nextTick()
+        const errorMessage = wrapper.get('#password-messages')
+        expect(errorMessage.text()).toBe('Password must have at least one lowercase character')
+      })
+      it('should show error for password without numbers', async () => {
+        const passwordInput = wrapper.get('input[type=password]')
+        await passwordInput.setValue('NoNumbers!')
+        await passwordInput.trigger('keyup')
+        await wrapper.vm.$nextTick()
+        const errorMessage = wrapper.get('#password-messages')
+        expect(errorMessage.text()).toBe('Password must have at least one number')
+      })
+      it('should show error for password without special characters', async () => {
+        const passwordInput = wrapper.get('input[type=password]')
+        await passwordInput.setValue('NoSpecials1')
+        await passwordInput.trigger('keyup')
+        await wrapper.vm.$nextTick()
+        await wrapper.vm.$nextTick()
+        const errorMessage = wrapper.get('#password-messages')
+        expect(errorMessage.text()).toBe('Password must have at least one special character')
+      })
+      it('should show error for password containing spaces', async () => {
+        const passwordInput = wrapper.get('input[type=password]')
+        await passwordInput.setValue('Has Space1!')
+        await passwordInput.trigger('keyup')
+        await wrapper.vm.$nextTick()
+        await wrapper.vm.$nextTick()
+        await wrapper.vm.$nextTick()
+        const errorMessage = wrapper.get('#password-messages')
+        expect(errorMessage.text()).toBe('Password must not contain spaces')
+      })
+      it('should not show any error for a valid password', async () => {
+        const passwordInput = wrapper.get('input[type=password]')
+        await passwordInput.setValue('ValidPass1!')
+        await passwordInput.trigger('keyup')
+        await wrapper.vm.$nextTick()
+        const errorMessage = wrapper.get('#password-messages')
+        expect(errorMessage.text()).not.toContain('Password must')
+      })
     })
     describe('Checkbox', () => {
       it('should update v-model value for checkbox', async () => {
@@ -122,15 +185,16 @@ describe('LoginForm', () => {
       })
     })
     describe('Log in', () => {
-      it('should trigger logIn function on click', async () => {
-        // issues with test, using emit as alternative
-        const emailInput = wrapper.get('input[type=email]')
-        emailInput.setValue('test@example.com')
+      // issues with tests, using emit as alternative to haveBeenCalled
+      it('should trigger submit function on click', async () => {
+        const emailInput = wrapper.find('input[type=email]')
+        const passwordInput = wrapper.find('input[type=password]')
+        await emailInput.setValue('test@example.com')
+        await passwordInput.setValue('password123')
         await wrapper.get('#log-in').trigger('click')
         expect(wrapper.emitted()).toHaveProperty('submit')
       })
-      it('should call logIn method when form is submitted', async () => {
-        // issues with test, using emit as alternative
+      it('should call submit method when form is submitted', async () => {
         // const logInSpy = vi.spyOn(wrapper.vm, 'submit')
         const emailInput = wrapper.get('input[type=email]')
         emailInput.setValue('test@example.com')
@@ -139,16 +203,48 @@ describe('LoginForm', () => {
         expect(wrapper.emitted()).toHaveProperty('submit')
         // expect(logInSpy).toHaveBeenCalled()
       })
-      // Keyboard Enter triggers
-      // Triggers if email and password complete
-      // Doesnt trigger if one / both fields empty
+      it('should trigger submit function on click', async () => {
+        const emailInput = wrapper.find('input[type=email]')
+        const passwordInput = wrapper.find('input[type=password]')
+        await emailInput.setValue('test@example.com')
+        await passwordInput.setValue('password123')
+        await wrapper.get('#log-in').trigger('click')
+        expect(wrapper.emitted()).toHaveProperty('submit')
+      })
+      it('should trigger submit function on enter', async () => {
+        const emailInput = wrapper.find('input[type=email]')
+        const passwordInput = wrapper.find('input[type=password]')
+        await emailInput.setValue('test@example.com')
+        await passwordInput.setValue('password123')
+        await wrapper.get('#form').trigger('keyup.enter')
+        expect(wrapper.emitted()).toHaveProperty('submit')
+      })
+      it('should not trigger submit when only email is filled', async () => {
+        const emailInput = wrapper.find('input[type=email]')
+        await emailInput.setValue('test@example.com')
+        await wrapper.get('#log-in').trigger('click')
+        expect(wrapper.emitted()).not.toHaveProperty('submit')
+      })
+      it('should not trigger submit when only password is filled', async () => {
+        const passwordInput = wrapper.find('input[type=password]')
+        await passwordInput.setValue('password123')
+        await wrapper.get('#log-in').trigger('click')
+        expect(wrapper.emitted()).not.toHaveProperty('submit')
+      })
+      it('should trigger submit when both email and password are filled', async () => {
+        const emailInput = wrapper.find('input[type=email]')
+        const passwordInput = wrapper.find('input[type=password]')
+        await emailInput.setValue('test@example.com')
+        await passwordInput.setValue('password123')
+        await wrapper.get('#log-in').trigger('click')
+        expect(wrapper.emitted()).toHaveProperty('submit')
+      })
     })
     describe('Log in with Google', () => {
       it('should trigger logInWithGoogle function on click', async () => {
-        const logInWithGoogleMock = vi.fn()
-        wrapper.vm.logInWithGoogle = logInWithGoogleMock
-        await wrapper.get('#google-log-in').trigger('click')
-        expect(logInWithGoogleMock).toHaveBeenCalled()
+        wrapper.get('#google-log-in').trigger('click')
+        await wrapper.vm.$nextTick()
+        expect(wrapper.emitted()).toHaveProperty('google')
       })
     })
     describe('Sign Up', () => {

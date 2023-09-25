@@ -25,6 +25,7 @@
         variant="solo"
         class="mx-4"
         v-model="input.password"
+        :rules="passwordRules"
       ></v-text-field>
       <v-row class="d-flex align-center justify-between mb-16 mx-4">
         <v-checkbox
@@ -91,6 +92,17 @@ export default {
             v
           ) || 'E-mail must be valid',
         (v: string) => (v && v.length <= 100) || 'E-mail must be less than 100 characters'
+      ],
+      passwordRules: [
+        (v: string) => !!v || 'Password is required',
+        (v: string) => (v && v.length >= 8) || 'Password must be at least 8 characters',
+        (v: string) => /[A-Z]/.test(v) || 'Password must have at least one uppercase character',
+        (v: string) => /[a-z]/.test(v) || 'Password must have at least one lowercase character',
+        (v: string) => /\d/.test(v) || 'Password must have at least one number',
+        (v: string) =>
+          /[!@#$%^&*()\-=+[\]{}|;:'",.<>?/]/.test(v) ||
+          'Password must have at least one special character',
+        (v: string) => !/\s/.test(v) || 'Password must not contain spaces'
       ]
     }
   },
@@ -100,15 +112,18 @@ export default {
       console.log('forgot')
     },
     submit() {
-      console.log('submitted')
-      this.$emit('submit', {
-        email: this.input.email,
-        password: this.input.password,
-        rememberMe: this.input.rememberMe
-      })
+      if (this.input.email && this.input.password) {
+        console.log('submitted')
+        this.$emit('submit', {
+          email: this.input.email,
+          password: this.input.password,
+          rememberMe: this.input.rememberMe
+        })
+      }
     },
     logInWithGoogle() {
       console.log('g log in')
+      this.$emit('google')
     },
     signUp() {
       console.log('sign up')
