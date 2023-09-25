@@ -185,12 +185,11 @@ describe('LoginForm', () => {
       })
     })
     describe('Log in', () => {
-      // issues with tests, using emit as alternative to haveBeenCalled
-      it('should trigger submit function on click', async () => {
+      it('should trigger submit function on click with valid details', async () => {
         const emailInput = wrapper.find('input[type=email]')
         const passwordInput = wrapper.find('input[type=password]')
         await emailInput.setValue('test@example.com')
-        await passwordInput.setValue('password123')
+        await passwordInput.setValue('Password123!')
         await wrapper.get('#log-in').trigger('click')
         expect(wrapper.emitted()).toHaveProperty('submit')
       })
@@ -203,19 +202,11 @@ describe('LoginForm', () => {
         expect(wrapper.emitted()).toHaveProperty('submit')
         // expect(logInSpy).toHaveBeenCalled()
       })
-      it('should trigger submit function on click', async () => {
+      it('should trigger submit function on enter with valid details', async () => {
         const emailInput = wrapper.find('input[type=email]')
         const passwordInput = wrapper.find('input[type=password]')
         await emailInput.setValue('test@example.com')
-        await passwordInput.setValue('password123')
-        await wrapper.get('#log-in').trigger('click')
-        expect(wrapper.emitted()).toHaveProperty('submit')
-      })
-      it('should trigger submit function on enter', async () => {
-        const emailInput = wrapper.find('input[type=email]')
-        const passwordInput = wrapper.find('input[type=password]')
-        await emailInput.setValue('test@example.com')
-        await passwordInput.setValue('password123')
+        await passwordInput.setValue('Password123!')
         await wrapper.get('#form').trigger('keyup.enter')
         expect(wrapper.emitted()).toHaveProperty('submit')
       })
@@ -231,11 +222,11 @@ describe('LoginForm', () => {
         await wrapper.get('#log-in').trigger('click')
         expect(wrapper.emitted()).not.toHaveProperty('submit')
       })
-      it('should trigger submit when both email and password are filled', async () => {
+      it('should trigger submit when both email and password are filled with valid details', async () => {
         const emailInput = wrapper.find('input[type=email]')
         const passwordInput = wrapper.find('input[type=password]')
         await emailInput.setValue('test@example.com')
-        await passwordInput.setValue('password123')
+        await passwordInput.setValue('Password123!')
         await wrapper.get('#log-in').trigger('click')
         expect(wrapper.emitted()).toHaveProperty('submit')
       })

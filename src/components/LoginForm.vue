@@ -112,7 +112,7 @@ export default {
       console.log('forgot')
     },
     submit() {
-      if (this.input.email && this.input.password) {
+      if (this.isFormValid) {
         console.log('submitted')
         this.$emit('submit', {
           email: this.input.email,
@@ -127,6 +127,15 @@ export default {
     },
     signUp() {
       console.log('sign up')
+    }
+  },
+
+  computed: {
+    isFormValid() {
+      return (
+        this.emailRules.every((rule) => rule(this.input.email) === true) &&
+        this.passwordRules.every((rule) => rule(this.input.password) === true)
+      )
     }
   }
 }
