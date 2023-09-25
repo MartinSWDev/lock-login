@@ -56,3 +56,7 @@ https://vuetifyjs.com/en/features/icon-fonts/
 12. Add styling
 
 13. Write functionality tests
+
+14. Spend way to much time trying to get vitest / vuetality to work together
+
+15.
