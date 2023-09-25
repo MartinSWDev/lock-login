@@ -66,3 +66,5 @@ https://vuetifyjs.com/en/features/icon-fonts/
 17. (Todo) Animate with Three.js
 
 18. (Todo) Tie in animation to input completion
+
+19. (Todo) Complete functions

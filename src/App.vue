@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import LoginForm from '@/components/LoginForm.vue'
+const imageUrl = new URL('/lock.png', import.meta.url).href
 </script>
 
 <template>
@@ -10,7 +11,7 @@ import LoginForm from '@/components/LoginForm.vue'
           <span class="mdi mdi-lock text-deep-purple-accent-2 lock-icon"></span>
           <p class="font-weight-bold">Lock Login</p>
         </div>
-        <img class="image-fit" src="lock.png" />
+        <img class="image-fit" :src="imageUrl" />
       </div>
       <LoginForm />
     </div>
